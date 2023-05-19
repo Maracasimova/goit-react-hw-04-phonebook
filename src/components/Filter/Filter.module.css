@@ -1,0 +1,25 @@
+.book {
+  align-items: center;
+  background-color: #d6d2c7;
+  display: flex;
+  flex-direction: column;
+}
+
+.text {
+  color: #5c5b43;
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.find {
+  color: #5c5b43;
+  margin-left: 20px;
+}
+
+.input {
+  border-radius: 10px;
+  width: 200px;
+  height: 30px;
+  color: #5c5b43;
+  background-color: #d6d2c7;
+}

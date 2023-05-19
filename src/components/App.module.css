@@ -1,0 +1,12 @@
+.book {
+  align-items: center;
+  background-color: #d6d2c7;
+  display: flex;
+  flex-direction: column;
+}
+
+.text {
+  color: #5c5b43;
+  font-size: 30px;
+  font-weight: 600;
+}
