@@ -18,7 +18,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
+    localStorage.setItem('LOCALSTORAGE_KEY', JSON.stringify(contacts));
   }, [contacts]);
 
   const addContact = userData => {
