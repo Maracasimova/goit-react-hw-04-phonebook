@@ -7,15 +7,15 @@ import style from './App.module.css';
 import { LOCALSTORAGE_KEY } from '../constants';
 
 const App = () => {
-  const [contacts, setContacts] = useState([]);
-  const [filter, setFilter] = useState('');
-
-  useEffect(() => {
+  const [contacts, setContacts] = useState(() => {
     const storedContacts = localStorage.getItem(LOCALSTORAGE_KEY);
     if (storedContacts !== null) {
-      setContacts(JSON.parse(storedContacts));
+      return JSON.parse(storedContacts);
+    } else {
+      return [];
     }
-  }, []);
+  });
+  const [filter, setFilter] = useState('');
 
   useEffect(() => {
     localStorage.setItem('LOCALSTORAGE_KEY', JSON.stringify(contacts));
