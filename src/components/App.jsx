@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import ContactForm from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactList/ContactList';
@@ -17,11 +17,16 @@ const App = () => {
   });
   const [filter, setFilter] = useState('');
 
-  useEffect(() => {
-    localStorage.setItem('LOCALSTORAGE_KEY', JSON.stringify(contacts));
-  }, [contacts]);
-
   const addContact = userData => {
+    const existingContact = contacts.find(
+      contact => contact.name === userData.name
+    );
+
+    if (existingContact) {
+      alert(`This contact ${existingContact.name} already exists.`);
+      return;
+    }
+
     const newUser = { ...userData, id: nanoid() };
     setContacts(prevContacts => [...prevContacts, newUser]);
   };
@@ -34,16 +39,15 @@ const App = () => {
     setFilter(value);
   };
 
-  const filterContact = (name, filter) => {
-    let nameLow = name.toLocaleLowerCase();
-    let filterLow = filter.toLocaleLowerCase();
-    return nameLow.indexOf(filterLow) >= 0;
+  const filterContact = () => {
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
+    );
   };
 
-  const contactSeach = contacts.filter(user =>
-    filterContact(user.name, filter)
-  );
   const contactName = contacts.map(user => user.name);
+
+  const filteredContacts = filterContact();
 
   return (
     <div className={style.book}>
@@ -52,8 +56,17 @@ const App = () => {
 
       <h2 className={style.text}>Contacts</h2>
 
-      <Filter handleChangeFilter={handleChangeFilter} filter={filter} />
-      <ContactList contactSeach={contactSeach} deleteContact={deleteContact} />
+      {filteredContacts.length === 0 ? (
+        <p>No contacts found.</p>
+      ) : (
+        <>
+          <Filter handleChangeFilter={handleChangeFilter} filter={filter} />
+          <ContactList
+            contactSearch={filteredContacts}
+            deleteContact={deleteContact}
+          />
+        </>
+      )}
     </div>
   );
 };
